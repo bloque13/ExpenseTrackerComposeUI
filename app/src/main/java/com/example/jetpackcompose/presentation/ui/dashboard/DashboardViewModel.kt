@@ -110,4 +110,8 @@ constructor(
         transactions.value = trans
     }
 
+    fun reload() {
+        sendEvent(AccountListEvent.LoadEvent)
+    }
+
 }
