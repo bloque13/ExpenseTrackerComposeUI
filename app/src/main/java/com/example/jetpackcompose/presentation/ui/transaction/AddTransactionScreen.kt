@@ -208,7 +208,7 @@ fun AddTransactionScreen(
                                         Locale.current.language,
                                         Locale.current.region
                                     )
-                                ).format(transactionAmount/100)
+                                ).format(transactionAmount)
 
                                 Text("Please confirm you wish to add a $selectedCategory amount of $str to $selectedAccount.")
                             },
