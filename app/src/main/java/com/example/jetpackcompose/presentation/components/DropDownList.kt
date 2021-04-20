@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DropdownListView(
     map: Map<Int, String>,
+    selectedText: String,
     title: String,
     onItemSelected: (String) -> Unit,
 ) {
-    var selectedText = remember { mutableStateOf("Please Select") }
     var expanded = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
@@ -31,7 +31,7 @@ fun DropdownListView(
                 style = MaterialTheme.typography.h6
             )
             Text(
-                text = selectedText.value,
+                text = selectedText,
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -50,7 +50,6 @@ fun DropdownListView(
             map.entries.forEach {
                 DropdownMenuItem(onClick = {
                     onItemSelected(it.value)
-                    selectedText.value = it.value
                     expanded.value = false
                 }) {
                     Text(text = it.value)

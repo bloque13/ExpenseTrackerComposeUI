@@ -20,12 +20,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import com.example.jetpackcompose.domain.model.TransactionType
 import com.example.jetpackcompose.presentation.components.DropdownListView
 import com.example.jetpackcompose.presentation.components.ExpenseTypeView
-import com.example.jetpackcompose.presentation.components.account.AccountListEvent
 import com.example.jetpackcompose.presentation.theme.AppTheme
-import com.example.jetpackcompose.presentation.ui.dashboard.DashboardViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.text.NumberFormat
 import java.util.*
@@ -117,6 +114,7 @@ fun AddTransactionScreen(
 
                     DropdownListView(
                         title = "Select Account",
+                        selectedText = selectedAccount,
                         map = accounts.map { it.id to it.name }.toMap(),
                         onItemSelected = { selectedAccount ->
                             viewModel.selectedAccount.value = selectedAccount
@@ -127,6 +125,7 @@ fun AddTransactionScreen(
 
                     DropdownListView(
                         title = "Select Category",
+                        selectedText = selectedCategory,
                         map = selectedCategoryMap,
                         onItemSelected = { selectedCategory ->
                             viewModel.selectedCategory.value = selectedCategory

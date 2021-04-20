@@ -29,9 +29,9 @@ constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
 ) : ViewModel() {
     val transactionAmount: MutableState<Double> = mutableStateOf(0.0)
-    val selectedCategory: MutableState<String> = mutableStateOf("")
+    val selectedCategory: MutableState<String> = mutableStateOf("Please Select")
     val selectedCategoryMap: MutableState<Map<Int, String>> = mutableStateOf(emptyMap())
-    val selectedAccount: MutableState<String> = mutableStateOf("")
+    val selectedAccount: MutableState<String> = mutableStateOf("Please Select")
     val isIncomeSelected = mutableStateOf(true)
     val confirmTransaction = mutableStateOf(false)
     val accounts: MutableState<List<Account>> = mutableStateOf(ArrayList())
@@ -120,10 +120,10 @@ constructor(
 
     fun validate() {
         errorMessage.value = ""
-        if (selectedAccount.value == "") {
+        if (selectedAccount.value == "Please Select") {
             errorMessage.value = "Please select an account"
             return
-        } else if (selectedCategory.value == "") {
+        } else if (selectedCategory.value == "Please Select") {
             val expenseType =
                 if (isIncomeSelected.value) TransactionType.INCOME.value else TransactionType.EXPENSE.value
             errorMessage.value = "Please select a $expenseType category"
@@ -155,6 +155,7 @@ constructor(
     fun selectedTransactionType(it: TransactionType) {
         isIncomeSelected.value = (it == TransactionType.INCOME)
         updateCategoryMap()
+        selectedCategory.value = "Please Select"
     }
 
     private fun updateCategoryMap() {
