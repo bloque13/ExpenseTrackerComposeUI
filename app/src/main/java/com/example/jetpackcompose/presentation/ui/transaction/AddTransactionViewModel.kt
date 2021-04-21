@@ -17,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,10 +36,8 @@ constructor(
     val accounts: MutableState<List<Account>> = mutableStateOf(ArrayList())
     val categories: MutableState<List<TransactionCategory>> = mutableStateOf(ArrayList())
     val loading = mutableStateOf(false)
-    val isChangeListenerActive = mutableStateOf(true)
     val errorMessage: MutableState<String> = mutableStateOf("")
     val transactionSaved: MutableState<Boolean> = mutableStateOf(false)
-    val amountValueEntered: MutableState<String> = mutableStateOf("")
 
     init {
         sendEvent(TransactionEvent.LoadEvent)
@@ -135,19 +132,6 @@ constructor(
         sendEvent(TransactionEvent.TransactionConfirmEvent)
     }
 
-    fun onAmountEnteredChange(change: String) {
-
-        isChangeListenerActive.value = false
-
-        val cleanString: String = change.replace("""[$,._-]""".toRegex(), "")
-        val parsed = cleanString.toDouble()
-        transactionAmount.value = parsed / 100
-
-        amountValueEntered.value = "%.2f".format(parsed / 100)
-
-        isChangeListenerActive.value = true
-    }
-
     fun saveTransaction() {
         sendEvent(TransactionEvent.SaveTransactionEvent)
     }
@@ -162,6 +146,10 @@ constructor(
         selectedCategoryMap.value =
             categories.value.filter { it.transactionType == (if (isIncomeSelected.value) "Income" else "Expense") }
                 .map { it.id to it.name }.toMap()
+    }
+
+    fun onAmountEntered(it: Double) {
+        transactionAmount.value = it
     }
 
 }
