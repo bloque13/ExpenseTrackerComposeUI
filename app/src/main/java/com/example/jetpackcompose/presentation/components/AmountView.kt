@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
@@ -42,6 +43,8 @@ fun AmountView(
         try {
             val result = amount.value.toDouble() / 100
             val dec = DecimalFormat("#,###.##")
+            dec.maximumFractionDigits = 2
+            dec.minimumFractionDigits = 2
             val str = dec.format(result)
             amountLabel.value = str
             onAmountEntered(result)
@@ -137,15 +140,16 @@ fun AmountView(
                 }
             }
             Button(
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 modifier = Modifier
                     .height(buttonDimension)
                     .width(buttonDimension)
                     .padding(buttonPadding),
-                onClick = { }
+                onClick = {
+                    numberSelected(0)
+                }
             ) {
                 Text(
-                    text = ""
+                    text = "0"
                 )
             }
         }
